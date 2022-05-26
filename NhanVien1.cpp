@@ -6,7 +6,7 @@ class NhanVien
 {
     private:
     string mnv, hoten;
-    long long luong;
+    long long luong,luongcanban;
     public:
     NhanVien()
     {
@@ -14,10 +14,11 @@ class NhanVien
         hoten="";
         luong=0;
     }
-    NhanVien(string mnv, string hoten )
+    NhanVien(string mnv, string hoten , long long luongcanban)
     {
         this->mnv=mnv;
         this->hoten=hoten;
+        this->luongcanban=luongcanban;
         luong=0;
     }
     void setMnv(string mnv)
@@ -44,7 +45,14 @@ class NhanVien
     {
         return luong;
     }
-    virtual setLuongcoban(long long)=0;
+    void setLuongcanban(long long Luongcanban)
+    {
+        this->luongcanban=luongcanban;
+    }
+    long long getLuongcanban()
+    {
+        return luongcanban;
+    }
     virtual getId()=0;
     virtual void Luong()=0;
     virtual  void display()=0;
@@ -53,7 +61,6 @@ class NhanVien
 class LapTrinhVien: public NhanVien
 {
     int giotangca;
-    long long luongcanban;
     int id;
     public:
     LapTrinhVien():NhanVien()
@@ -61,9 +68,8 @@ class LapTrinhVien: public NhanVien
         giotangca=0;
         id=1;
     }
-    LapTrinhVien(string mnv, string hoten, long long luongcanban, int giotangca):NhanVien(mnv, hoten)
+    LapTrinhVien(string mnv, string hoten, long long luongcanban, int giotangca):NhanVien(mnv, hoten, luongcanban)
     {
-        this->luongcanban=luongcanban;
         this->giotangca=giotangca;
         id=1;
     }
@@ -75,21 +81,13 @@ class LapTrinhVien: public NhanVien
     {
         return giotangca;
     }
-    void setLuongcanban(long long Luongcanban)
-    {
-        this->luongcanban=luongcanban;
-    }
-    long long getLuongcanban()
-    {
-        return luongcanban;
-    }
     int getId()
     {
         return id;
     }
     void Luong()
     {
-        setLuong(luongcanban+giotangca*250000);
+        setLuong(getLuongcanban()+giotangca*250000);
     }
     void display()
     {
@@ -143,17 +141,15 @@ class NhanVienKiem: public NhanVien
 {
     private:
     int soloi;
-    long long luongcanban;
     int id;
     public:
     NhanVienKiem():NhanVien()
     {
         soloi=0;
     }
-    NhanVienKiem(string mnv, string hoten, long long luongcanban, int soloi):NhanVien(mnv, hoten)
+    NhanVienKiem(string mnv, string hoten,long long luongcanban, int soloi):NhanVien(mnv, hoten,luongcanban)
     {
         this->soloi=soloi;
-        this->luongcanban=luongcanban;
     }
     void setSoloi(int soloi)
     {
@@ -163,21 +159,13 @@ class NhanVienKiem: public NhanVien
     {
         return soloi;
     }
-    void setLuongcanban(long long Luongcanban)
-    {
-        this->luongcanban=luongcanban;
-    }
-    long long getLuongcanban()
-    {
-        return luongcanban;
-    }
     int getId()
     {
         return id;
     }
     void Luong()
     {
-         setLuong(luongcanban+soloi*85000);
+         setLuong(getLuongcanban()+soloi*85000);
     }
     void display()
     {
@@ -227,17 +215,17 @@ class NhanVienKiem: public NhanVien
             cout << "Nhap MNV: ";
             cin>>mnv;
             cout << "Nhap so gio tang ca: ";
-            cin >> sogiolam;
+            cin >> giotangca;
             cout << "Nhap luong co ban: ";
-            cin >> luongcoban;
+            cin >> luongcanban;
             cout << "Nhap phu cap: ";
             cin >> phucap;
-            a[i]=new PhanTichVien(mnv,hoten,luongcoban,sogiolam, phucap);
+            a[i]=new PhanTichVien(mnv,hoten,luongcanban,giotangca, phucap);
         }
         cout << "So nhan vien nhan vien kiem :";
         cin >> nvk;
         n=n+nvk;
-        for(int i=ptv; i<n;i++)
+        for(int i=ptv+ltv; i<n;i++)
         {
             cin.ignore();
             string hoten, mnv;
@@ -246,10 +234,14 @@ class NhanVienKiem: public NhanVien
             cout << "Nhap MNV: ";
             cin>>mnv;
             cout << "Nhap so loi: ";
-            cin >> sogiolam;
+            cin >> giotangca;
             cout << "Nhap luong co ban: ";
-            cin >> luongcoban;
-            a[i]=new LapTrinhVien(mnv,hoten,luongcoban, soloi);
+            cin >> luongcanban;
+            a[i]=new NhanVienKiem(mnv,hoten,luongcanban, soloi);
+        }
+        for(int i=0;i<n;i++)
+        {
+            a[i]->Luong();
         }
      }
     void Xuat()
@@ -338,9 +330,9 @@ class NhanVienKiem: public NhanVien
             if(a[i]->getMnv()==mnv)
             {
                 cout << "Nhap luong co ban: ";
-                int luongcoban;
-                cin >> luongcoban;
-                a[i]->setLuongcoban(luongcoban);
+                int luongcanban;
+                cin >> luongcanban;
+                a[i]->setLuongcanban(luongcanban);
             }
         }
     }
