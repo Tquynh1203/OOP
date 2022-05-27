@@ -288,14 +288,14 @@ private:
             cin >> n;
             for(int i=0;i<n;i++)
             {
-                cout << "Nhap danh sach lop chuan "<<i++<<endl;
+                cout << "Nhap danh sach lop chuan "<<i+1<<endl;
                 lopc[i].Nhap();
             }
             cout << "Nhap so lop chat luong cao: "<<endl;
             cin >> m;
             for(int i=0;i<n;i++)
             {
-                cout << "Nhap danh sach lop chat luong cao "<<i++<<endl;
+                cout << "Nhap danh sach lop chat luong cao "<<i+1<<endl;
                 lopclc[i].Nhap();
             }
         }
