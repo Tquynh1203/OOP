@@ -1,326 +1,283 @@
-#include <iostream>
-
+#include<iostream>
 using namespace std;
 
 class NhanVien
 {
 private:
-    string hoTen;
     string maNhanVien;
+    string hoTen;
     string ngaySinh;
-    int tongLuong;
+    long long luongCoBan;
+    long long tongLuong;
 public:
     NhanVien()
     {
-        hoTen="";
-        maNhanVien="";
-        ngaySinh="";
-        tongLuong=0;
+        maNhanVien = "";
+        hoTen = "";
+        ngaySinh = "";
+        luongCoBan = 0;
+        tongLuong = 0;
     }
-    NhanVien(string hoTen,string maNhanVien, string ngaySinh)
+    NhanVien(string maNhanVien, string hoTen, string ngaySinh, long long luongCoBan )
     {
-        this->hoTen=hoTen;
-        this->maNhanVien=maNhanVien;
-        this->ngaySinh=ngaySinh;
-    }
-    void setHoTen(string hoTen)
-    {
-        this->hoTen=hoTen;
-    }
-    string getHoten()
-    {
-        return hoTen;
+        this -> maNhanVien = maNhanVien;
+        this -> hoTen = hoTen;
+        this -> ngaySinh = ngaySinh;
+        this -> luongCoBan = luongCoBan;
+        tongLuong = 0;
     }
     void setMaNhanVien(string maNhanVien)
     {
-        this->maNhanVien=maNhanVien;
+        this -> maNhanVien = maNhanVien;
     }
     string getMaNhanVien()
     {
         return maNhanVien;
     }
+    void setHoTen(string hoTen)
+    {
+        this -> hoTen = hoTen;
+    }
+    string getHoTen()
+    {
+        return hoTen;
+    }
     void setNgaySinh(string ngaySinh)
     {
-        this->ngaySinh=ngaySinh;
+        this -> ngaySinh = ngaySinh;
     }
     string getNgaySinh()
     {
         return ngaySinh;
     }
-    void setTongLuong(int tongLuong)
+    void setLuongCoBan(long long luongCoBan)
+    {
+        this -> luongCoBan = luongCoBan;
+    }
+    long long getLuongCoBan()
+    {
+        return luongCoBan;
+    }
+    void setTongLuong(long long tongLuong)
     {
         this->tongLuong=tongLuong;
     }
-    int getTongLuong()
+    long long getTongLuong()
     {
         return tongLuong;
     }
-    virtual int getId()=0;
-    virtual void Luong()=0;
-    virtual void display()=0;
-    virtual void setLuongCoBan(int )=0;
+    virtual void TongLuong() = 0;
+    virtual void Xuat() = 0;
 };
-class VanPhong:public NhanVien
+class VanPhong : public NhanVien
 {
 private:
-    int luongCoBan;
     int soNgayLam;
     int troCap;
-    int id;
 public:
-    VanPhong():NhanVien()
+    VanPhong() : NhanVien()
     {
-        luongCoBan=0;
-        soNgayLam=0;
-        troCap=0;
-        id=1;
+        soNgayLam = 0;
+        troCap = 0;
     }
-    VanPhong(string hoTen,string maNhanVien, string ngaySinh, int luongCoBan, int soNgayLam, int troCap):NhanVien(hoTen, maNhanVien, ngaySinh)
+    VanPhong(string maNhanVien, string hoTen, string ngaySinh, long long luongCoBan, int soNgayLam, int troCap) : NhanVien(maNhanVien, hoTen, ngaySinh, luongCoBan)
     {
-        this->luongCoBan=luongCoBan;
-        this->soNgayLam=soNgayLam;
-        this->troCap=troCap;
-        id=1;
+        this -> soNgayLam = soNgayLam;
+        this -> troCap = troCap;
     }
-    int getId()
+    void setSoNgayLam(int soNgayLam)
     {
-        return id;
+        this -> soNgayLam = soNgayLam;
     }
-    void Luong()
+    int getSoNGayLam()
     {
-        setTongLuong(luongCoBan+soNgayLam*220000+troCap);
+        return soNgayLam;
     }
-     void setLuongCoBan(int luongCoBan)
+    void setTroCap(int troCap)
     {
-        this->luongCoBan=luongCoBan;
+        this -> troCap = troCap;
     }
-    void display()
+    int getTroCap()
     {
-        cout << "VanPhong: Ten: "<<getHoten()<<endl;
-        cout << "VanPhong: Ma Nhan Vien: " <<getMaNhanVien()<<endl;
-        cout << "VanPhong: Ngay Sinh: "<<getNgaySinh()<<endl;
-        cout << "VanPhong: Tong Luong: "<<getTongLuong()<<endl;
+        return troCap;
+    }
+    void TongLuong()
+    {
+        setTongLuong ( getLuongCoBan() + soNgayLam * 220000 + troCap );
+    }
+    void Xuat()
+    {
+        cout << "Ma Nhan Vien: " << getMaNhanVien() ;
+        cout << " - Ho Ten: " << getHoTen() ;
+        cout << " - Ngay Sinh: " << getNgaySinh() ;
+        cout << " - Tong Luong: " << getTongLuong();
+        cout << " - Chuc vu: Nhan vien van phong " << endl;
     }
 };
-class SanXuat:public NhanVien
+class SanXuat : public NhanVien
 {
 private:
-    int luongCoBan;
     int soSanPham;
-    int id;
 public:
-    SanXuat():NhanVien()
+    SanXuat() : NhanVien()
     {
-        luongCoBan=0;
-        soSanPham=0;
-        id=2;
+        soSanPham = 0;
     }
-    SanXuat(string hoTen,string maNhanVien, string ngaySinh, int luongCoBan, int soSanPham):NhanVien(hoTen, maNhanVien, ngaySinh)
+    SanXuat(string maNhanVien, string hoTen, string ngaySinh, long long luongCoBan, int soSanPham) : NhanVien(maNhanVien, hoTen, ngaySinh, luongCoBan)
     {
-        this->luongCoBan=luongCoBan;
-        this->soSanPham=soSanPham;
-        id=2;
+        this -> soSanPham = soSanPham;
     }
-    int getId()
+    void setSoSanPham(int soSanPham)
     {
-        return id;
+        this -> soSanPham = soSanPham;
     }
-     void setLuongCoBan(int luongCoBan)
+    int getSoSanPham()
     {
-        this->luongCoBan=luongCoBan;
+        return soSanPham;
     }
-    void Luong()
+    void TongLuong()
     {
-        setTongLuong(luongCoBan+soSanPham*175000);
+        setTongLuong( getLuongCoBan() + soSanPham * 175000);
     }
-    void display()
+    void Xuat()
     {
-        cout << "SanXuat: Ten: "<<getHoten()<<endl;
-        cout << "SanXuat: Ma Nhan Vien: " <<getMaNhanVien()<<endl;
-        cout << "SanXuat: Ngay Sinh: "<<getNgaySinh()<<endl;
-        cout << "SanXuat: Tong Luong: "<<getTongLuong()<<endl;
+        cout << "Ma Nhan Vien: " << getMaNhanVien() ;
+        cout << " - Ho Ten: " << getHoTen() ;
+        cout << " - Ngay Sinh: " << getNgaySinh() ;
+        cout << " - Tong Luong: " << getTongLuong();
+        cout << " - Chuc vu: Nhan vien san xuat " << endl;
     }
 };
-class QuanLy:public NhanVien
+class QuanLy : public NhanVien
 {
 private:
-    int luongCoBan;
     double heSoChucVu;
     int thuong;
-    int id;
 public:
-    QuanLy():NhanVien()
+    QuanLy() : NhanVien()
     {
-        luongCoBan=0;
-        heSoChucVu=0;
+        heSoChucVu = 0;
         thuong=0;
-        id=3;
     }
-    QuanLy(string hoTen,string maNhanVien, string ngaySinh, int luongCoBan, double heSoChucVu,int thuong ):NhanVien(hoTen, maNhanVien, ngaySinh)
+    QuanLy(string maNhanVien, string hoTen, string ngaySinh, long long luongCoBan, double heSoChucVu, int thuong) : NhanVien(maNhanVien, hoTen, ngaySinh, luongCoBan)
     {
-        this->luongCoBan=luongCoBan;
-        this-> heSoChucVu= heSoChucVu;
-        this-> thuong= thuong;
-        id=3;
+        this -> heSoChucVu = heSoChucVu;
+        this -> thuong = thuong;
     }
-    int getId()
+    void setHeSoChucVu(int heSoChucVu)
     {
-        return id;
+        this -> heSoChucVu = heSoChucVu;
     }
-    void setLuongCoBan(int luongCoBan)
+    double getHeSoChucVu()
     {
-        this->luongCoBan=luongCoBan;
+        return heSoChucVu;
     }
-    void Luong()
+    void setThuong(int thuong)
     {
-        setTongLuong(luongCoBan*heSoChucVu+thuong);
+        this -> thuong = thuong;
     }
-    void display()
+    double getThuong()
     {
-        cout << "QuanLy: Ten: "<<getHoten()<<endl;
-        cout << "QuanLy: Ma Nhan Vien: " <<getMaNhanVien()<<endl;
-        cout << "QuanLy: Ngay Sinh: "<<getNgaySinh()<<endl;
-        cout << "QuanLy: Tong Luong: "<<getTongLuong()<<endl;
+        return thuong;
+    }
+    void TongLuong()
+    {
+        setTongLuong( getLuongCoBan() * heSoChucVu + thuong);
+    }
+    void Xuat()
+    {
+        cout << "Ma Nhan Vien: " << getMaNhanVien() ;
+        cout << " - Ho Ten: " << getHoTen() ;
+        cout << " - Ngay Sinh: " << getNgaySinh() ;
+        cout << " - Tong Luong: " << getTongLuong();
+        cout << " - Chuc vu: Quan Ly " << endl;
     }
 };
 class CongTy
 {
 private:
-    NhanVien* a[10];
+    NhanVien* a[300];
     int n;
 public:
     void Nhap()
     {
-        n=5;
-        a[0]= new SanXuat("Nguyen Van A","2324259","12/04/2003",300000,45);
-        a[1]=new VanPhong("Nguyen Van B","2324258","3/04/2003", 300000, 27, 40000);
-        a[2]=new VanPhong("Nguyen Van C","2324257","01/04/2003", 300000, 25, 40000);
-        a[3]=new QuanLy("Nguyen Van D","2324256","02/04/2003",300000, 2.3, 30000);
-        a[4]= new SanXuat("Nguyen Van E","2324255","15/04/2003",300000,60);
+        a[0] = new SanXuat ( "21522539", "Nguyen Van A", "23/04/2003" , 230000 , 2000);
+        a[1] = new QuanLy ( "21522538", "Nguyen Van B", "03/04/2003" , 230000 , 1.2, 300000);
+        a[2] = new VanPhong ( "21522537", "Nguyen Van C", "05/06/2003", 230000, 23, 30000);
+        a[3] = new QuanLy ( "21522536", "Nguyen Van D", "03/04/2003" , 230000 , 2.4, 300000);
+        a[4] = new SanXuat ( "21522535", "Nguyen Van E", "04/04/2003" , 230000 , 5000);
+        a[5] = new VanPhong ( "21522534", "Nguyen Van G", "25/04/2003" , 230000 , 25, 40000);
+        n=6;
     }
     void Xuat()
     {
         for(int i=0; i<n;i++)
         {
-            a[i]->display();
-            cout << "----------------"<<endl;
+            a[i]->Xuat();
         }
-
-    }
-    void KhoiTao()
-    {
-        n=6;
-        a[5]=new QuanLy("Nguyen Van G","2324254","23/04/2003",300000, 2.5, 30000);
-        Xuat();
     }
     void Luong()
     {
         for(int i=0; i<n;i++)
         {
-            a[i]->Luong();
-
+            a[i]->TongLuong();
         }
-        Xuat();
     }
-    void TongLuong()
+    void KhoiTao()
     {
-        long long max=0;
-        long long tb=0;
-        for(int i=0; i<n;i++)
+        a[6] = new SanXuat ( "21522533", "Nguyen Van H", "23/04/2003" , 230000 , 4000);
+        n = n + 1;
+    }
+    void Tong()
+    {
+        long long tong=0;
+        for( int i = 0; i < n ; i++)
         {
-            max+= a[i]->getTongLuong();
+            tong+= a[i]->getTongLuong();
         }
-        tb=max/n;
-        cout << "Tong luong: "<< max<<endl;
-        cout << "Trung binh luong: "<<tb<<endl;
+        long long trungbinh=0;
+        trungbinh=tong/n;
+        cout << "Tong luong: " << tong << endl;
+        cout << "Trung binh luong: " << trungbinh << endl;
     }
     void Tim()
     {
-        string mnv="2324259";
-        cout << "Nhan vien can tim la: "<<endl;
-        for(int i=0;i<n;i++)
+        string maNhanVien = "21522536";
+        cout << "Nhan vien can tim co ma nhan vien " << maNhanVien << " la: " << endl;
+        for(int i = 0; i < n ; i++)
         {
-            if(a[i]->getMaNhanVien()==mnv)
+            if(a[i]->getMaNhanVien()==maNhanVien)
             {
-                a[i]->display();
+                a[i]->Xuat();
             }
         }
     }
     void LuongCao()
     {
-        NhanVien* max= a[0];
-        for(int i=0;i<n;i++)
+        NhanVien* max = a[0];
+        for(int i = 0; i < n ; i++)
         {
-            if(a[i]->getTongLuong()>max->getTongLuong())
+            if(a[i]->getTongLuong() > max->getTongLuong() )
             {
-                max=a[i];
+                max = a[i];
             }
         }
-        cout << "Nhan vien luong cao nhat la: "<< max->getHoten()<<endl;
+        cout << "Nhan vien luong cao nhat la: " << max->getHoTen() << endl;
     }
-    void LuongCoBan()
-    {
-        cout << "Cap nhat luong cho quan li: "<<endl;
-        cout << endl;
-        for(int i=0;i<n;i++)
-        {
-            if(a[i]->getId()==3)
-            {
-                a[i]->setLuongCoBan(400000);
-            }
-        }
-        Luong();
-    }
-    void Xoa()
-    {
-        int k=2;
-        for(int i=k-1;i<n;i++)
-        {
-            a[i]=a[i+1];
-        }
-        n=n-1;
-        Xuat();
-    }
-
-
 };
 int main()
 {
-    cout << "\tCau 1"<<endl;
-    cout <<endl;
     CongTy congty;
     congty.Nhap();
-    cout << "======================================================"<<endl;
-    cout << "\tCau 2"<<endl;
-    cout <<endl;
-    congty.KhoiTao();
-    cout << "======================================================"<<endl;
-    cout << "\tCau 3"<<endl;
-    cout <<endl;
     congty.Luong();
-    cout << "======================================================"<<endl;
-    cout << "\tCau 4"<<endl;
-    cout <<endl;
+    congty.KhoiTao();
+    congty.Luong();
     congty.Xuat();
-    cout << "======================================================"<<endl;
-    cout << "\tCau 5"<<endl;
-    cout <<endl;
-    congty.TongLuong();
-    cout << "======================================================"<<endl;
-    cout << "\tCau 6"<<endl;
-    cout <<endl;
-    congty.Tim();
-    cout << "======================================================"<<endl;
-    cout << "\tCau 7"<<endl;
-    cout <<endl;
+    cout << "-------------------------------------------" << endl;
     congty.LuongCao();
-    cout << "======================================================"<<endl;
-    cout << "\tCau 8"<<endl;
-    cout <<endl;
-    congty.LuongCoBan();
-    cout << "======================================================"<<endl;
-    cout << "\tCau 9"<<endl;
-    cout <<endl;
-    congty.Xoa();
-    cout << "======================================================"<<endl;
+    cout << "-------------------------------------------" << endl;
+    congty.Tim();
+    cout << "-------------------------------------------" << endl;
+    congty.Tong();
+    cout << "-------------------------------------------" << endl;
 }
