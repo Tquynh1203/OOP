@@ -269,7 +269,6 @@ int main()
 {
     CongTy congty;
     congty.Nhap();
-    congty.Luong();
     congty.KhoiTao();
     congty.Luong();
     congty.Xuat();
