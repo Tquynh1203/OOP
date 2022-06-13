@@ -41,7 +41,7 @@ class NhanVien
     }
     long long getLuong()
     {
-        return luong
+        return luong;
     }
     virtual void Luong()=0;
     virtual int SanPham()=0;
